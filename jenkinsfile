@@ -1,0 +1,43 @@
+pipeline {
+    agent { label 'windows_node' }
+
+    stages {
+        stage('Build') {
+            steps {
+                bat 'Build.bat'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                bat 'Unit.bat'
+            }
+        }
+
+        stage('Quality Check') {
+            steps {
+                bat 'Quality.bat'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat 'Deploy.bat'
+            }
+        }
+    }
+}
+post {
+        always {
+            echo 'Pipeline Execution Finished.'
+        }
+
+        success {
+            echo 'Pipeline Executed Successfully.'
+        }
+
+        failure {
+            echo 'Pipeline Failed.'
+        }
+    }
+}
